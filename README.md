@@ -1,10 +1,8 @@
 # Game Theory Solver
-Game theory is a series of tools and methods which attempt to model rational behavior given agents with payoffs. Here, rational behavoir is defined as having complete and transitive preferences. In other words, each agent is able to compare the value for all of her options and rank order them. The rank ordering of the preferences satisfy transitivitiy.
+Game theory is a series of tools and methods which attempt to model rational behavior given agents with payoffs. Here, rational behavior is defined as having complete and transitive preferences. In other words, each agent is able to compare the value for all of her options and rank order them. The rank ordering of the preferences satisfy transitivity, continuity, and independence. With this mathematical framework, one can show with the [Von Neumann–Morgenstern utility theorem](https://en.wikipedia.org/wiki/Von_Neumann%E2%80%93Morgenstern_utility_theorem) that this is sufficient to construct a utility function and connect this theory to the rest of economics and decision theory. It is worth exploring the mathematical object if these axioms are void (e.g. the agent is irrational), however, this is outside of the current scope of this project.
 
-Currently, this repo can find any Nash Equilibrium in two player simultaneous game with n*m choices and deterministic strategies.
+Currently, this repo can find any Nash Equilibrium in two player simultaneous game with *n* * *m* choices and deterministic strategies. It can also simulate game theory environments where there are non-memory, iterative games with any number of agents and choices, although two agents per game. This is similar to Axelrod's tournament although here, the agents optimizing on their choices. Once a general mixed equilibrium strategy is in place, this will fix some of the arbitrary choices such as playing the choosing the first of any *n* Nash Equilibriums
 
-Next step is to allow for stochastic strategies and non-memory, iterative games (like axelrod's tournament). Similarly, explore visualizations for steady states in such games. This was inspired by [Nicky Case's](http://ncase.me/trust/) video on the subject.
+Next step is to allow for stochastic strategies and unit testing. Similarly, explore visualizations for steady states in such games. This was inspired by [Nicky Case's](http://ncase.me/trust/) video on the subject.
 
 For more information visit the [Game Theory wiki](https://en.wikipedia.org/wiki/Game_theory)
-
-
