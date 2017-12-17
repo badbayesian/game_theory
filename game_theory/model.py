@@ -36,17 +36,20 @@ class game():
         Locations of all nash equilibriums in game
     self.nash : tuple
         Nash Equilibrium values #TODO multi nash and mixed nash
+    self.social_opt : tuple
+        Social optimal point which is defined as the sum with equal weights
     """
 
     def __init__(self, payoffs, name='game', mixed=False):
         """Initialize and run game."""
         self.name = name
         self.players = 2
-        self.dim = [len(payoffs[0]), len(payoffs[0][1])]
+        self.dim = [len(payoffs[0][0]), len(payoffs[0][1])]
         self.payoffs = self.translate_payoffs(payoffs)
         self.nash_location = self.find_nash(mixed)
         self.nash = self.payoffs[self.nash_location[0][0],
                                  self.nash_location[0][1]]
+        self.social_opt = self.find_social_opt()
 
     def __repr__(self):
         """Print game with pandas, only 26 max choices for now."""
@@ -61,10 +64,10 @@ class game():
         """Manipulate payoffs arrays into matrix of tuples."""
         payoff_matrix = np.zeros((self.dim[0], self.dim[1]), dtype='int,int')
 
-        for i in range(0, self.dim[0]):
-            for j in range(0, self.dim[1]):
-                payoff_matrix[i][j][0] = payoffs[0][i][j]
-                payoff_matrix[i][j][1] = payoffs[1][i][j]
+        for col in range(0, self.dim[0]):
+            for row in range(0, self.dim[1]):
+                payoff_matrix[col][row][0] = payoffs[0][col][row]
+                payoff_matrix[col][row][1] = payoffs[1][col][row]
 
         return(payoff_matrix)
 
@@ -80,40 +83,46 @@ class game():
             nash = np.zeros((self.dim[0], self.dim[1]), dtype='int,int')
 
             player_1_choices = []
-            for i in range(0, self.dim[1]):
+            for row in range(0, self.dim[1]):
                 payoffs_per_column = [payoff[0] for payoff in
-                                      [column[i] for column in self.payoffs]]
+                                      [column[row] for column in self.payoffs]]
                 player_1_choices.append(
                     np.argwhere(
                         payoffs_per_column == np.amax(payoffs_per_column)))
 
-            for i in range(0, self.dim[1]):
-                if len(player_1_choices[i].flatten()) == 1:
-                    nash[player_1_choices[i].flatten()[0]][i][0] = 1
+            for row in range(0, self.dim[1]):
+                if len(player_1_choices[row].flatten()) == 1:
+                    nash[player_1_choices[row].flatten()[0]][row][0] = 1
                 else:
                     for j in range(0, len(player_1_choices[i].flatten())):
                         nash[player_1_choices[i].flatten()[j]][i][0] = 1
 
             player_2_choices = []
-            for i in range(0, self.dim[0]):
-                payoffs_per_row = [row[1] for row in self.payoffs[i]]
+            for col in range(0, self.dim[0]):
+                payoffs_per_row = [row[1] for row in self.payoffs[col]]
                 player_2_choices.append(
                     np.argwhere(payoffs_per_row == np.amax(payoffs_per_row)))
 
-            for i in range(0, self.dim[0]):
-                if len(player_2_choices[i].flatten()) == 1:
-                    nash[i][player_2_choices[i].flatten()[0]][1] = 1
+            for col in range(0, self.dim[0]):
+                if len(player_2_choices[col].flatten()) == 1:
+                    nash[i][player_2_choices[col].flatten()[0]][1] = 1
                 else:
                     for j in range(0, len(player_2_choices[i].flatten())):
                         nash[i][player_2_choices[i].flatten()[j]][1] = 1
+        else:
+            print("TODO")
 
         coords = []
-        for i in range(0, self.dim[0]):
-            for j in range(0, self.dim[1]):
-                if nash[i][j][0] == 1 and nash[i][j][1] == 1:
-                    coords.append([i, j])
+        for col in range(0, self.dim[0]):
+            for row in range(0, self.dim[1]):
+                if nash[col][row][0] == 1 and nash[col][row][1] == 1:
+                    coords.append([col, row])
 
         return(coords)
+
+    def find_social_opt(self):
+        """Find social optimum"""
+        return(1)
 
 
 class evolution():
@@ -132,10 +141,6 @@ class evolution():
     -----------
     games : dict
         Dictionary of games with payoffs
-        Example:
-        X = [[-5, 5], [10, 8]]
-        Y = [[2, 3], [1, 1]]
-        games = {"X X": [X, X], "X Y": [X, Y], "Y Y": [Y, Y]}
     player_pop : dict
         Dictionary of agents and number of agents
     number_of_games : int
@@ -182,12 +187,12 @@ class evolution():
         In this version, only two agents can meet each other to create a game.
         As such, if there is an odd number of players, on player does not play
         that round. The scores are saved as an array of dictonaries for easy
-        slicing.\n
+        slicing.
 
-        Example: \n
+        Example:
         [{'X': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         'Y': [0, 0, 0, 0, 0],
-        'Z': [0, 0, 0, 0, 0]}, \n
+        'Z': [0, 0, 0, 0, 0]},
         {'X': [0, 0, 1, 0, 0, 0, 0, 0, 0, -2],
         'Y': [-1, -1, -1, -2, 2],
         'Z': [0, -1, 2, 2, 2]}]
