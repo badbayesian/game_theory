@@ -2,7 +2,7 @@ import copy
 import itertools
 import numpy as np
 import pandas as pd
-
+from game_theory import optimization as opt
 
 class game():
     """Collection of methods to solve games in game theory.
@@ -55,6 +55,8 @@ class game():
         except IndexError:
             self.nash = None
 
+        except TypeError:
+            self.nash = "mixed"
 
     def __repr__(self):
         """Print game with pandas, only 26 max choices for now."""
@@ -64,7 +66,7 @@ class game():
                           index=name[0], columns=name[1])
         return(self.name + '\n\n' + str(df) + '\n\n' +
                'Nash Equilibrum(s) at: ' + str(self.nash_location) + '\n\n' +
-              'Social Optimal of ' + str(self.social_optimal[0]) + ' at: ' +
+               'Social Optimal of ' + str(self.social_optimal[0]) + ' at: ' +
                str(self.social_optimal[1]))
 
     def translate_payoffs(self, payoffs):
@@ -83,7 +85,7 @@ class game():
 
         Currently information is saved as a matrix of tuples. Unclear if that
         will remain if multiagents are added.
-        #TODO mixed strategies
+
         #TODO multiagents
         """
         if not mixed:
@@ -116,16 +118,19 @@ class game():
                 else:
                     for j in range(0, len(player_2_choices[col].flatten())):
                         nash[col][player_2_choices[col].flatten()[j]][1] = 1
+
+            coords = []
+            for col in range(0, self.dim[0]):
+                for row in range(0, self.dim[1]):
+                    if nash[col][row][0] == 1 and nash[col][row][1] == 1:
+                        coords.append([col, row])
+
+            return(coords)
+
         else:
-            print("TODO")
-
-        coords = []
-        for col in range(0, self.dim[0]):
-            for row in range(0, self.dim[1]):
-                if nash[col][row][0] == 1 and nash[col][row][1] == 1:
-                    coords.append([col, row])
-
-        return(coords)
+            lp = opt.LinProg()
+            sol = lp.ce(A=self.payoffs.flatten(), solver="glpk")
+            return(sol['x'])
 
     def find_social_opt(self):
         """Find social optimal and its location"""
@@ -141,7 +146,6 @@ class game():
                     social_optimal_loc.append([col, row])
 
         return(social_optimal, social_optimal_loc)
-
 
 class evolution():
     """Simulated iterative, non-memory games.
