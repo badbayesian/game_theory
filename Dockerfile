@@ -13,9 +13,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -y && \
 RUN ln -nsf /usr/bin/python3 /usr/bin/python
 RUN ln -s /usr/bin/pip3 /usr/bin/pip
 
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
-RUN pip install .
+COPY ./requirements.txt /root/
+RUN pip install -r /root/requirements.txt
 
 COPY . /src/game_theory
-RUN cd /src/game_theory && python setup.py install
+RUN cd /src/game_theory && pip install -e . && python setup.py install
+
+RUN cd /src/game_theory/game_theory/tests && pytest test_model.py

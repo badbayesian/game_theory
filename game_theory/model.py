@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 from game_theory import optimization as opt
 
+
 class game():
     """Collection of methods to solve games in game theory.
 
@@ -133,7 +134,7 @@ class game():
             return(sol['x'])
 
     def find_social_opt(self):
-        """Find social optimal and its location"""
+        """Find social optimal and its location."""
         social_optimal = sum(self.payoffs[0][0])
         social_optimal_loc = []
 
@@ -146,6 +147,7 @@ class game():
                     social_optimal_loc.append([col, row])
 
         return(social_optimal, social_optimal_loc)
+
 
 class evolution():
     """Simulated iterative, non-memory games.
