@@ -14,7 +14,6 @@ RUN ln -nsf /usr/bin/python3 /usr/bin/python
 RUN ln -s /usr/bin/pip3 /usr/bin/pip
 
 RUN pip install --upgrade pip
-RUN pip install -U setuptools
 RUN pip install -U "numpy==1.14.0rc1"
 RUN pip install -U "pandas==0.18.1"
 RUN pip install -U "cvxopt==1.1.6"
