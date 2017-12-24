@@ -7,7 +7,6 @@ language:
 python:
   - "3.6"
 install:
-  - docker build -t badbayesian/game_theory
-  - pip install .
+  - docker build .
 script:
   - pytest

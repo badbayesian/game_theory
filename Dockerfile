@@ -14,9 +14,8 @@ RUN ln -nsf /usr/bin/python3 /usr/bin/python
 RUN ln -s /usr/bin/pip3 /usr/bin/pip
 
 RUN pip install --upgrade pip
-RUN pip install -U "numpy==1.14.0rc1"
-RUN pip install -U "pandas==0.18.1"
-RUN pip install -U "cvxopt==1.1.6"
+RUN pip install -r requirements.txt
+RUN pip install .
 
 COPY . /src/game_theory
 RUN cd /src/game_theory && python setup.py install
