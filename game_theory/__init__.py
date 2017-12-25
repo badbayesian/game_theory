@@ -1,1 +1,1 @@
-from game_theory import model, optimization, example_payoffs
+from game_theory import model, minimax, example_payoffs

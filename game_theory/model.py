@@ -2,7 +2,7 @@ import copy
 import itertools
 import numpy as np
 import pandas as pd
-from game_theory import optimization as opt
+from game_theory.minimax import LinProg
 
 
 class game():
@@ -129,7 +129,7 @@ class game():
             return(coords)
 
         else:
-            lp = opt.LinProg()
+            lp = LinProg()
             sol = lp.ce(A=self.payoffs.flatten(), solver="glpk")
             return(sol['x'])
 

@@ -5,7 +5,6 @@ from game_theory.example_payoffs import BoS1, BoS2, chicken, coordinate_side, \
 
 
 class TestModels(unittest.TestCase):
-
     def setUp(self):
         self.BoS1 = game(name="Battle of The Sexes 1", payoffs=BoS1)
         self.BoS2 = game(name="Battle of The Sexes 2", payoffs=BoS2)
