@@ -21,4 +21,4 @@ RUN pip install -r /root/requirements.txt
 COPY . /src/game_theory
 RUN cd /src/game_theory && pip install -e . && python setup.py install
 
-RUN cd /src/game_theory/game_theory/tests && pytest test_model.py
+RUN cd /src/game_theory/game_theory/tests && pytest
