@@ -2,6 +2,7 @@ import unittest
 import numpy as np
 from game_theory.minimax import LinProg
 from cvxopt import matrix, solvers
+solvers.options['glpk'] = {'tm_lim': 1000}  # max timeout for glpk
 
 
 class TestMinimax(unittest.TestCase):

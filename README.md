@@ -1,4 +1,8 @@
 # Game Theory Solver
+
+[![Travis-CI Build Status](https://travis-ci.org/badbayesian/game_theory.svg?branch=master)](https://travis-ci.org/badbayesian/game_theory)
+
+
 Game theory is a series of tools and methods which attempt to model rational behavior given agents with payoffs. Here, rational behavior is defined as having complete and transitive preferences. In other words, each agent is able to compare the value for all of her options and rank order them. The rank ordering of the preferences satisfy transitivity, continuity, and independence. With this mathematical framework, one can show with the [Von Neumann–Morgenstern utility theorem](https://en.wikipedia.org/wiki/Von_Neumann%E2%80%93Morgenstern_utility_theorem) that this is sufficient to construct a utility function and connect this theory to the rest of economics and decision theory. While the mathematical object if these axioms are voided (e.g. the agent is irrational) is worth exploring, such explorations are outside of the scope of this project.
 
 Currently, this repo can find any Nash Equilibrium in two player simultaneous game with *n* * *m* choices and deterministic strategies. It can also simulate game theory environments where there are non-memory, iterative games with any number of agents and choices, although two agents per game. This is similar to Axelrod's tournament although here, the agents optimize on their choices as oppose to enacting heuristic strategies (always cheat, tic-for-tac, etc.) and then examining at steady states. Once a general mixed equilibrium strategy is in place, this will fix some of the arbitrary choices such as playing the choosing the first of any *n* Nash Equilibriums
