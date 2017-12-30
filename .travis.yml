@@ -4,8 +4,5 @@ python: 3.6
 services: docker
 before_script:
   - docker build .
-  - apt-get install libopenblas-dev libatlas-dev libblas-dev liblapack-dev libglpk-dev
-  - pip install -r requirements
-  - pip install -e .
 script:
   - pytest
